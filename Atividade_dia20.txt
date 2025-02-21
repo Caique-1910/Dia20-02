@@ -1,0 +1,35 @@
+
+void setup()
+{
+pinMode(LedVerde, OUTPUT)
+pinMode(LedAmarelo, OUTPUT)
+pinMode(LedVermelho, OUTPUT)
+pinMode(LedVerde2, OUTPUT)
+pinMode(LedAmarelo2, OUTPUT)
+pinMode(LedVermelho2, OUTPUT)
+}
+void loop()
+{
+digitalWrite(pinLedVerde,HIGH);
+digitalWrite(pinLedVermelho2, HIGH);
+digitalWrite(pinLedVermelho, LOW);
+digitalWrite(pinLedAmarelo,LOW):
+delay(Tempo3s);
+
+
+digitalWrite(pinLedVerde,LOW);
+digitalWrite(pinLedAmarelo,HIGH);
+delay(Tempo2s)
+
+digitalWrite(pinLedVermelho2,LOW);
+digitalWrite(pinLedVerde2,HIGH);
+digitalWrite(pinLedAmarelo,LOW);
+digitalWrite(pinLedVermelho,HIGH);
+delay(Tempo3s);
+
+digitalWrite(pinLedVerde2,LOW);
+digitalWrite(pinLedAmarelo2,HIGH);
+digitalWrite(pinLedVermelho,HIGH);
+delay(Tempo2s);
+
+}
