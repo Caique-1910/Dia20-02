@@ -1,0 +1,62 @@
+//OPERADORES DE COMPARACAO
+// == verifica se dois valores sao iguais
+// != verifcando se dois valores sao diferentes
+// < ve rifica se e menor que
+// > verifica se e maior que
+// <= verifca se menor ou igual
+// >= verifica se maior ou igual
+//! inverte o resultado
+// || ou
+//Exemplos:
+//if(condicao){}
+
+// bool janelaAberta =true;
+//bool portaAberta = true;
+// if (portaAberta==true){}
+// if (portaAberta){}
+
+// if (portaAberta & janelaAberta){}
+//if(portaAberta==true){Serial.println("PortaAberta");
+//else{Serial.println("Ligar o ar da sala");
+//if (!portaAberta){}
+//(portaAberta==false);
+
+// int umidade = 65;
+//if(temperatura < 12 || umidade > 70){Serial.println("Alerta");}
+//
+int temperatura = 24;
+
+
+
+void setup()
+{
+  Serial.begin(9600);
+  if(temperatura >=30){
+    Serial.println("ESTAR UM INFERNO"); 
+  }
+  else
+  {
+    Serial.println("Nao esta calor");
+  }
+  else if (temperatura <= 30 & temperatura >= 24)
+  {
+    Serial.println("Partiu praia de Santos");
+  }
+  else if (temperatura < 24 & temperatura >= 18)
+  {
+    Serial.println("Ta daora");
+  }
+  else if (temperatura < 18 & temperatura >= 6)
+  {
+    Serial.println ("Ta frio dms");
+  }
+    else
+    {
+      Serial.println("Frio infernal");
+    }
+}
+
+void loop()
+{
+ 
+}
