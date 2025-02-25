@@ -1,0 +1,34 @@
+IMC
+/*
+Resposta correta:
+float peso = 90;
+float altura = 1.82;
+float imc = 0;
+Serial.begin (9600);
+imc=peso/(altura*altura);
+Serial.println(imc);
+if(imc < 18.5 ) {Serial.println("abaixo");
+else if (imc <= 24.9) {Serial.println("Normal");
+else if (imc <= 29.9 ){Serial.println ("Sobrepeso");
+else (imc > 30) {Serial.println("OBESO");
+
+
+*/
+float peso = 90;
+  float altura = 1.82;
+ float resultado = 0;
+void setup()
+{
+    Serial.begin(9600);
+    resultado = peso/sq(altura);
+    Serial.print(resultado);                  
+  if ( resultado >=25.1 & resultado <=29.9) { Serial.println(" Sobrepeso");}  
+  else if ( resultado <=24.9 & resultado >=18.5) { Serial.println(" Peso adequado"); }
+  else if ( resultado <=18.4) {  Serial.println(" Abaixo do peso");}
+  else if ( resultado >30) { Serial.println(" Obeso");}
+  
+                      
+}
+
+void loop(){
+}
