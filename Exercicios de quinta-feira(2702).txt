@@ -69,21 +69,33 @@ void loop()
 
 exercicio 8
 
-int numeroA =2;
+int numeroA =5;
 int numeroB =5;
 void setup()
 {
   Serial.begin(9600);
   if (numeroA > numeroB){Serial.print(numeroA);
-                        Serial.print(" E maior que o outro ");}
-  else{Serial.print(numeroA);
-    Serial.print(" E menor que o outro");}
-}
+                        Serial.print(" e maior que o outro ");
+                        Serial.print(numeroB);
+                        }
+   else if (numeroA=numeroB){Serial.print(numeroA);
+                        Serial.print (" e igual a "); 
+                            Serial.print(numeroB);
+                           }
 
+  else{
+    Serial.print(numeroA);
+    Serial.print(" e menor que o outro ");
+Serial.print(numeroB);
+       }
+ 
+
+}
 void loop()
 {
   
 }
+
 exercicio 9
 
 float nota1=6;
