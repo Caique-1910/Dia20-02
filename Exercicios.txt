@@ -36,3 +36,128 @@ void loop()
 }
 
 exercicio 3
+int resultado=0;
+int val=131;
+void setup()
+{
+ pinMode(13,OUTPUT);
+  Serial.begin(9600);
+resultado=map(val,0,1023,0,100);
+  if(resultado >=80 || resultado <=100){digitalWrite(13,HIGH);
+                                    Serial.print("O valor ");
+                                       Serial.print(val);
+                     Serial.print(" excedeu os limites,");
+                                        Serial.print(" o valor foi reajustado para ");
+                                        Serial.print(resultado);
+                                       }
+  else if (resultado <80){digitalWrite(13,LOW);}
+  
+}
+
+void loop()
+{
+  
+}
+
+exercício 4
+int numeroA=10;
+
+
+
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
+  if(numeroA % 2 == 0 )
+ {
+    digitalWrite(13,HIGH);
+   Serial.print("O numero eh par");
+ }
+ else
+ {
+   digitalWrite(13,LOW);
+   Serial.print("O numero eh impar");
+ }
+
+}
+
+void loop()
+{}
+
+Correção:
+exercício 1
+float temperatura = 29.0;
+#define pin 13
+
+void setup()
+{
+  pinMode(pin,OUTPUT);
+  if(temperatura >=30.0){pinMode(pin,HIGH);}
+  else if(temperatura <29.9){pinMode(pin,LOW);}
+ 
+  
+
+}
+
+void loop()
+{
+ if(temperatura >=30.0){digitalWrite(pin,HIGH);}
+  else if(temperatura <29.9){digitalWrite(pin,LOW);}
+}
+
+
+
+exercício 2
+
+#define pin2 13
+int carga = 17;
+  
+void setup()
+{
+  pinMode(pin2,OUTPUT);
+  if(carga =80 & carga >= 20){digitalWrite(pin2,HIGH);}
+  else if (carga <19){digitalWrite(pin2,LOW);}
+}
+
+void loop()
+{
+ 
+}
+
+exercício 3
+
+
+void setup()
+{
+Serial.begin(9600);
+int valor=1000;
+int valorMap=map(valor, 0, 1023, 0, 100);
+Serial.println(valormap);
+
+int valorConstrain = constrain(valorMap, 20, 80);
+Serial.println(valorConstrain);
+
+
+
+}
+
+void loop()
+{}
+
+exercício 4
+
+void setup()
+{
+pinMode(13,OUTPUT);
+int numero=2;
+int resto= numero%2;
+if (resto==0{digitalWrite(13,HIGH);}
+else{
+digitalWrite(13,LOW);}
+
+
+}
+
+void loop()
+{}
