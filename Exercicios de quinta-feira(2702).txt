@@ -1,0 +1,109 @@
+Exercicios de quinta-feira(27/02)
+
+exercicio 5
+
+int numeroAv=-3;
+
+
+
+void setup()
+{
+ Serial.begin(9600);
+  if(numeroAv >=0 ){Serial.print("Este numero eh positivo");}
+  else{Serial.print("Este numero eh negativo");}
+  
+}
+void loop()
+
+{}
+
+exercicio 6
+
+float salario=999;
+String nome("Caique");
+String cargo("CEO");
+
+void setup()
+{
+  Serial.begin(9600);
+  
+  if( salario <1000){
+float acres=(10*salario)/100;
+float salariof=salario+acres; 
+  Serial.println("Nome:");
+    Serial.println(nome);
+    Serial.println("Cargo:");
+    Serial.println(cargo);
+    Serial.println(salariof);
+    
+  }
+  
+}
+
+void loop()
+{
+  
+}
+
+exercicio 7
+
+void setup()
+{
+  Serial.begin(9600);
+  float salario=500;
+float aumento=(salario*30)/100;
+float salarioF=aumento;
+  if(salario<=500){
+     float salario=500;
+float aumento=(salario*30)/100;
+float salarioF=aumento+salario;
+  Serial.print(salarioF);
+    Serial.print(" SEU NOVO SALARIO CLT");
+  }
+}
+
+void loop()
+{
+ 
+}
+
+exercicio 8
+
+int numeroA =2;
+int numeroB =5;
+void setup()
+{
+  Serial.begin(9600);
+  if (numeroA > numeroB){Serial.print(numeroA);
+                        Serial.print(" E maior que o outro ");}
+  else{Serial.print(numeroA);
+    Serial.print(" E menor que o outro");}
+}
+
+void loop()
+{
+  
+}
+exercicio 9
+
+float nota1=6;
+float nota2=6;
+float nota3=6;
+float nota4=6;
+float media=0;
+void setup()
+{
+  Serial.begin(9600);
+  media=(nota1+nota2+nota3+nota4)/4;
+  if (media >= 7.0){Serial.print("APROVADO");}
+   else if (media <4.9){Serial.print("REPROVADO");}
+  else if(media <7 || media >5){Serial.print("RECUPERACAO");}
+  
+ 
+ 
+}
+
+void loop()
+{
+
+}
