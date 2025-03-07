@@ -1,0 +1,131 @@
+Aula31/32_07/02
+#define pinledr 13
+#define pinledb 10
+#define tempoPisca 1000
+unsigned long tempoms;
+unsigned long tempoInicial=1;
+bool estadoLed =0;
+//unsigned long tempous;
+void setup()
+{
+  pinMode(pinledr, OUTPUT);
+  pinMode(pinledb, OUTPUT); 
+  Serial.begin(9600);
+ 
+  
+
+}
+
+void loop()
+{
+  // tempous = micros();
+  //  Serial.println (tempous);
+  
+  tempoms = millis();
+  Serial.println(tempoms);
+  
+  if(tempoms - tempoInicial >= tempoPisca)
+  {estadoLed =!estadoLed;
+  tempoInicial = tempoms;
+           }
+  digitalWrite(pinledb,estadoLed);
+  
+}
+
+
+Sexta
+
+#define vermelho 8
+#define amarelo 12 
+#define verde 7 
+unsigned long tempoAnterior = 0; 
+unsigned long intervaloVermelho = 5000; 
+unsigned long intervaloAmarelo = 2000; 
+unsigned long intervaloVerde = 5000;
+void setup() 
+{
+  pinMode(vermelho, OUTPUT);
+ pinMode(amarelo, OUTPUT); 
+ pinMode(verde, OUTPUT); 
+}
+void loop() 
+{ unsigned long tempoAtual = millis();
+ if (tempoAtual - tempoAnterior >= intervaloVermelho) 
+ { tempoAnterior = tempoAtual; 
+  digitalWrite(vermelho, LOW); 
+  digitalWrite(amarelo, HIGH); }
+ if (tempoAtual - tempoAnterior >= intervaloVermelho + intervaloAmarelo)
+ { tempoAnterior = tempoAtual;
+                                                                          digitalWrite(amarelo, LOW); 
+                                                                          digitalWrite(verde, HIGH); }
+ if (tempoAtual - tempoAnterior >= intervaloVermelho + intervaloAmarelo + intervaloVerde) 
+ { tempoAnterior = tempoAtual; 
+  digitalWrite(verde, LOW); 
+  digitalWrite(vermelho, HIGH); 
+ }
+
+
+
+
+
+}
+/*
+correcao
+#define pinLedVermelho 13
+#define pinLedAmarelo 12 
+#define pinLedVerde 11
+const int tempoVerde=3000;
+const int tempoAmarelo=2000;
+cons int tempoVermelho=5000;
+unsigned long tempoInicial=0;
+char faseSemaforo = 0;
+
+void setup()
+{
+pinMode(pinLedVermelho, OUTPUT);
+ pinMode(pinLedAmarelo, OUTPUT); 
+ pinMode(pinLedVerde, OUTPUT); 
+
+}
+void loop()
+{
+tempoAtual=millis();
+if(faseSemaforo==0)
+{
+digitalWrite(pinLedAmarelo,LOW);
+digitalWrite(pinLedVermelho,HIGH);
+if(tempoAtual-tempoInicial>=){
+faseSemaforo=1;
+tempoInicial=tempoAtual;}
+}
+
+
+if(faseSemaforo==1)
+{
+digitalWrite(pinLedVermelho,LOW);
+digitalWrite(pinLedVerde,HIGH);
+if(tempoAtual-tempoInicial>=tempoVerde){
+
+faseSemaforo=2;
+tempoInicial=tempoAtual
+}
+}
+
+
+if(faseSemaforo==2)
+{
+digitalWrite(pinLedVerde,LOW);
+digitalWrite(pinLedAmarelo,HIGH);
+if (tempoAtual-tempoInicial>=tempoAmarelo){
+tempoInicial=tempoAtual;
+faseSemaforo=0;
+}
+}
+
+
+
+
+}
+
+
+*/
