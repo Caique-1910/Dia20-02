@@ -1,0 +1,76 @@
+Aula dia 10/03
+/*
+CORRECAO
+#define pinBotao 10
+#define LED 2
+
+void setup()
+ {
+ pinMode(pinBotao,INPUT);
+ pinMode(LED_BUILTIN,OUTPUT);
+  Serial.begin(9600);
+}
+void loop()
+{
+static bool estadoAnteriorBotao=0;
+bool estadoAtualBotao = digitalRead(pinBotao);
+if(estadoAtualBotao && !estadoAnteriorBotao)
+{
+contagem++;
+Serial.println(contagem);
+}
+estadoAnteriorBotao=estadoAtualbotao;
+
+
+}
+
+*/
+#define pinBotao 10
+#define LED 2
+int estadoButao=0;
+int contador=0;
+
+void setup()
+{
+
+  pinMode(pinBotao,INPUT);
+ pinMode(LED_BUILTIN,OUTPUT);
+  Serial.begin(9600);
+  
+}
+
+void loop()
+{
+ bool statusBotao = digitalRead(pinBotao);
+ 
+  if (statusBotao ==1)
+  {
+    digitalWrite(LED_BUILTIN,HIGH);
+    digitalWrite(LED,HIGH);
+    
+  }
+  else if (statusBotao==0)
+  {
+    digitalWrite(LED_BUILTIN,LOW);
+    digitalWrite(LED,LOW);
+  }
+  switch(statusBotao)
+  {
+  case 1:
+    estadoButao==statusBotao;
+    contador==estadoButao;
+    contador++;
+    Serial.print("O botao foi apertado ");
+   Serial.print(contador);
+    Serial.println(" vezes");
+      
+    
+   
+  
+  break;
+  }
+  
+  
+  
+  
+}
