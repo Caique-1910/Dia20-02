@@ -1,0 +1,37 @@
+Aula34:Display_11_03
+
+Worwi
+#include <LiquidCrystal_I2C.h>//adiciona uma biblioteca
+
+LiquidCrystal_I2C lcd(0x27, 20, 4);//cria um objeto
+
+const int pinBotao1=8;
+const int pinLedVermelho=13;
+
+
+void setup() {
+pinMode(pinLedVermelho, OUTPUT);
+pinMode(pinBotao1, INPUT);
+lcd.init();//inicia o display
+lcd.backlight();//acende os pixels
+lcd.setCursor(0,0);//posiciona a escrita primeiro a coluna e dps a linha
+lcd.print("Estado do Led eh");//escrve no display
+
+}
+
+void loop() {
+ bool statusBotao=digitalRead(pinBotao1);
+if(statusBotao==1)
+{
+  digitalWrite(pinLedVermelho, HIGH);
+  lcd.setCursor(1,1);
+  lcd.print("LIGADO   ");
+}
+else if(statusBotao==0)
+{
+  digitalWrite(pinLedVermelho,LOW);
+  lcd.setCursor(1,1);
+lcd.print("DESLIGADO");
+}
+}
+
