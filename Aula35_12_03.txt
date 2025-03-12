@@ -1,0 +1,194 @@
+Aula35_12_03
+/*
+Autor: Caique
+Nome do programa: Dois led num display
+Descricao: Acender 2 leds e aparecer no display
+Data: 12/03/2025
+*/
+
+
+
+#include <LiquidCrystal_I2C.h>
+ //adiciona uma biblioteca
+
+LiquidCrystal_I2C lcd(0x27, 20, 4);//cria um objeto
+
+const int pinBotao1=8;
+const int pinLedVermelho=13;
+const int pinLedAzul=7;
+const int pinBotao2=6; 
+
+void setup() {
+pinMode(pinLedVermelho, OUTPUT);
+pinMode(pinBotao1, INPUT);
+lcd.init();//inicia o display
+lcd.backlight();//acende os pixels
+lcd.setCursor(0,0);//posiciona a escrita primeiro a coluna e dps a linha
+lcd.print("Estado do Led eh");//escreve no display
+
+}
+
+void loop()
+  
+{
+
+bool statusAnterior=0;
+bool statusBotao=digitalRead(pinBotao1);
+  
+  
+if(statusBotao==1)
+{
+  digitalWrite(pinLedVermelho, HIGH);
+  lcd.setCursor(1,1);
+  lcd.print("ON ");
+
+}
+else if(statusBotao==0)
+{
+  digitalWrite(pinLedVermelho,LOW);
+  lcd.setCursor(1,1);
+  lcd.print("OFF");
+}
+
+  bool statusBotao2=digitalRead(pinBotao2);
+  if (statusBotao2==1)
+  {
+    digitalWrite(pinLedAzul,HIGH);
+    lcd.setCursor(4,1);
+    lcd.print("  ON  ");
+   
+  }
+  else
+  {
+    digitalWrite(pinLedAzul,LOW);
+    lcd.print(" OFF");
+  }
+}
+
+CORRECAO
+
+/*
+CORRECAO
+
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+const char pinBotao1=8;
+const char pinLedVermelho=13;
+const char pinLedVermelho2=7;
+const char pinBotao2=9;
+
+
+void setup() {
+pinMode(pinLedVermelho, OUTPUT);
+pinMode(pinBotao1, INPUT);
+pinMode(pinLedVermelho2, OUTPUT);
+pinMode(pinBotao2, INPUT);
+lcd.init();
+lcd.backlight();
+lcd.setCursor(0,0);
+lcd.print("LED A OFF");
+lcd.setCursor(0,0);
+
+}
+
+void loop()
+  
+{
+ bool estadoBotaoA = digitalRead(pinBotaoA) ;
+ static bool estadoAnteriorBotaoA = 0;
+ static bool estadoLedA = 0;
+  
+  if(!estadoBotaoA && estadoAnteriorBotaoA)
+  {
+  estadoLedA = !estadoLedA;
+  digitalWrite(pinLedA, estadoLedA);
+  lcd.setCursor (6,0);
+  lcd.print(estadoLedA);
+  }
+ 
+  }
+  estadoAnteriorBotaoB = estadoBotaoB;
+  if(estadoLedB)
+    {
+  lcd.print("ÖN ");
+  lcd.setCursor (6,0);
+  }   
+  else
+  {
+  lcd.print("OFF"); 
+  lcd.setCursor (6,0);
+  } 
+   bool estadoBotaoB = digitalRead(pinBotaoB) ;
+ static bool estadoAnteriorBotaoB = 0;
+ static bool estadoLedB = 0;
+  
+  if(!estadoBotaoB && estadoAnteriorBotaoB)
+  {
+  estadoLedB = !estadoLedB;
+  digitalWrite(pinLedA, estadoLedA);
+  lcd.setCursor (6,0);
+  lcd.print(estadoLedA);
+  }
+ 
+  }
+  estadoAnteriorBotaoB = estadoBotaoB;
+  if(estadoLedB)
+    {
+  lcd.print("ÖN ");
+  lcd.setCursor (6,0);
+  }   
+  else
+  {
+  lcd.print("OFF"); 
+  lcd.setCursor (6,0);
+  } 
+
+
+
+
+
+}
+
+
+
+Parte 2
+
+/*
+Autor: Caique
+Nome do programa: Dois led num display
+Descricao: Acender 2 leds e aparecer no display
+Data: 12/03/2025
+*/
+#define pinAnalogico A0
+
+void setup()
+{
+  Serial.begin(9600);
+  
+}
+
+void loop()
+{
+ int leituraA0=analogRead(pinAnalogico);
+Serial.println(leituraA0*5/1024.0);
+  
+  
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
