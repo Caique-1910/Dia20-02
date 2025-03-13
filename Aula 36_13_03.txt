@@ -1,0 +1,295 @@
+Aula 36_13_03
+
+
+/*
+Autor: Caique
+Nome do programa: 5 botoes e dois leds
+Descricao: Acender 2 leds e aparecer no display
+Data: 13/03/2025
+*/
+
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27,16,2);
+
+#define pinLedVermelho 9
+#define pinLedVerde 8
+#define pinAnalogico A0
+void setup()
+{
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print("+");
+  Serial.begin(9600);
+  pinMode(pinLedVermelho, OUTPUT);
+    pinMode(pinLedVerde, OUTPUT);
+
+}
+
+void loop()
+{
+int leituraA0=analogRead(pinAnalogico);
+Serial.println(leituraA0);
+  delay(500);
+ 
+  Exercicio dos botoes e aparecer no display quem foi apertado 
+  
+  Primeira solucao
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27,16,2);
+
+#define pinLedVermelho 9
+#define pinLedVerde 8
+#define pinAnalogico A0
+void setup()
+{
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print("+");
+  Serial.begin(9600);
+  pinMode(pinLedVermelho, OUTPUT);
+    pinMode(pinLedVerde, OUTPUT);
+
+}
+
+void loop()
+{
+int leituraA0=analogRead(pinAnalogico);
+Serial.println(leituraA0);
+  delay(500);
+ 
+
+   if(leituraA0==0)
+  {
+   
+ lcd.setCursor(0,1);
+    lcd.print("Botao 1 foi pres");
+    
+  }
+  
+  else if(leituraA0==145)
+  {
+     
+    lcd.setCursor(0,1);
+    lcd.print("Botao 2 foi pres");
+  }
+   else if(leituraA0==329)
+  {
+     
+    lcd.setCursor(0,1);
+    lcd.print("Botao 3 foi pres");
+  }
+   else if(leituraA0==505)
+  {
+     
+    lcd.setCursor(0,1);
+    lcd.print("Botao 4 foi pres");
+  }
+   else if(leituraA0==741)
+  {
+    
+    lcd.setCursor(0,1);
+    lcd.print("Botao 5 foi pres");
+  }
+   else if(leituraA0==1023)
+  {
+    
+    lcd.setCursor(0,1);
+    lcd.print("Nenhum foi pres ");
+  }
+/*
+  Segunda solucao
+  switch(leituraA0) {
+   case 0:
+  lcd.setCursor(0,1);
+    lcd.print("Botao 1 foi pres");
+  
+  break;
+   case 145:
+  lcd.setCursor(0,1);
+    lcd.print("Botao 2 foi pres");
+  
+  break;
+   case 329:
+  lcd.setCursor(0,1);
+    lcd.print("Botao 3 foi pres");
+  
+  break;
+   case 505:
+  lcd.setCursor(0,1);
+    lcd.print("Botao 4 foi pres");
+  
+  break;
+   case 741:
+  
+   lcd.setCursor(0,1);
+    lcd.print("Botao 5 foi pres");
+  break;
+    case 1023:
+    lcd.setCursor(0,1);
+    lcd.print("Nenhum foi pres ");
+    break;
+  }
+  */
+
+  
+  
+}
+
+Exercicio da seta
+
+
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,16,2);
+
+#define pinLedVermelho 9
+#define pinLedVerde 8
+#define pinAnalogico A0
+void setup()
+{
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print(">");
+  lcd.setCursor(1,0);
+  lcd.print("LED A OFF");
+  lcd.setCursor(1,1);
+  lcd.print("LED B OFF");
+  Serial.begin(9600);
+  pinMode(pinLedVermelho, OUTPUT);
+    pinMode(pinLedVerde, OUTPUT);
+  
+  
+
+}
+
+void loop()
+{
+  
+int leituraA0=analogRead(pinAnalogico);
+Serial.println(leituraA0);
+  delay(500);
+
+  
+  if(leituraA0==0)
+  {
+  
+    lcd.setCursor(0,0);
+    lcd.print(" ");
+    lcd.setCursor(0,1);
+    lcd.print(">");
+    
+  }
+  
+  else if(leituraA0==145)
+  {
+    
+    lcd.setCursor(0,1);
+    lcd.print(" ");
+    lcd.setCursor(0,0);
+    lcd.print(">");
+  }
+  else if(leituraA0==741)
+  {
+   digitalWrite(pinLedVermelho,HIGH);
+    lcd.setCursor(1,1);
+  lcd.print("LED B ON ");
+   
+  }
+  else if (leituraA0==1023)
+  {
+    digitalWrite(pinLedVermelho,LOW);
+   lcd.setCursor(1,1);
+  lcd.print("LED B OFF");
+    
+  }
+  
+  
+}
+
+Correcao
+/*
+
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,16,2);
+
+#define pinLedVermelho 9
+#define pinLedVerde 8
+#define pinAnalogico A0
+void setup()
+{
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print(">");
+  lcd.setCursor(1,0);
+  lcd.print("LED A OFF");
+  lcd.setCursor(1,1);
+  lcd.print("LED B OFF");
+  Serial.begin(9600);
+  pinMode(pinLedVermelho, OUTPUT);
+    pinMode(pinLedVerde, OUTPUT);
+  
+  
+
+}
+void loop()
+{
+static bool posicao =0;
+int valorLeitura=analogRead(A0);
+static int valorAnteriorLeitura=1023;
+
+  
+  if(valorAnteriorLeitura ==1023 && valorLeitura==valorBotao1)
+  {
+  posicao=0;
+  
+  }
+else if (valorAnteriorLeitura==1023 &&
+valorLeitura>= valorBotao2*0.9 && valorLeitura<=valorBotao2 *1.1)
+{
+posicao=1;
+}
+
+valorAnteriorLeitura=valorLeitura;
+
+
+
+if(posicao==0)
+{
+lcd.setCursor(0,0);
+lcd.print(">");
+lcd.setCursor(0,1);
+lcd.print(" ");
+}
+else
+{
+lcd.setCursor(0,1);
+lcd.print(">");
+lcd.setCursor(0,0);
+lcd.print(" ");
+}
+
+if (valorAnteriorLeitura==1023 &&
+valorLeitura>= valorBotao5*0.9 && valorLeitura<=valorBotao5 *1.1)
+
+{
+lcd.setCursor(1,1);
+  lcd.print("LED B ON ")
+digitalWrite(pinLedB,HIGH);
+
+}
+else
+{
+ lcd.setCursor(1,1);
+  lcd.print("LED B OFF");
+digitalWrite(pinLedB,HIGH);
+}
+}
+
+*/
+
+
