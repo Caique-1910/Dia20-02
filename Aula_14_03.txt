@@ -1,0 +1,143 @@
+Aula_14_03
+/*
+Autor: Caique
+Nome do programa: 5 botoes e dois leds
+Descricao: Acender 2 leds e aparecer no display
+Data: 14/03/2025
+*/
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,16,2);
+#define valorBotao1 0
+#define valorBotao2 145
+#define valorBotao3 329
+#define valorBotao4 505
+#define valorBotao5 741
+#define pinLedB 10
+#define pinLedA 9 
+#define pinAnalogico A0
+void setup()
+{
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print(">");
+  lcd.setCursor(1,0);
+  lcd.print("LED A OFF");
+  lcd.setCursor(1,1);
+  lcd.print("LED B OFF");
+  Serial.begin(9600);
+  pinMode(pinLedB, OUTPUT);
+    pinMode(pinLedA, OUTPUT);
+  
+  
+
+}
+void loop()
+{
+static bool posicao =0;
+int valorLeitura=analogRead(A0);
+static int valorAnteriorLeitura=1023;
+
+   
+
+  //botao 1
+  if(valorAnteriorLeitura ==1023 && valorLeitura==valorBotao1)
+  {
+  posicao=0;
+  
+  }
+  //botao 2
+else if (valorAnteriorLeitura==1023 &&
+valorLeitura>= valorBotao2*0.9 && valorLeitura<=valorBotao2 *1.1)
+{
+posicao=1;
+}
+  //botao5
+  else if (valorAnteriorLeitura==1023 &&
+valorLeitura>= valorBotao5*0.9 && valorLeitura<=valorBotao5 *1.1)
+{
+    
+    
+}
+
+
+
+//fim dos botoes
+//tratamento do display
+if(posicao==0)
+{
+lcd.setCursor(0,0);
+lcd.print(">");
+lcd.setCursor(0,1);
+lcd.print(" ");
+}
+else
+{
+lcd.setCursor(0,1);
+lcd.print(">");
+lcd.setCursor(0,0);
+lcd.print(" ");
+}
+
+   
+if (valorAnteriorLeitura==1023&&
+valorLeitura>= valorBotao5*0.9 && valorLeitura<=valorBotao5*1.1 && posicao==1)
+
+{
+lcd.setCursor(1,1);
+  lcd.print("LED B ON ");
+analogWrite(pinLedB,50);
+  posicao=1;
+
+}
+else
+{
+ lcd.setCursor(1,1);
+  lcd.print("LED B OFF");
+analogWrite(pinLedB,0);
+}
+
+ if (valorAnteriorLeitura==1023&&
+valorLeitura>= valorBotao5*0.9 && valorLeitura<=valorBotao5*1.1 && posicao==0)
+
+{
+lcd.setCursor(1,0);
+  lcd.print("LED A ON ");
+analogWrite(pinLedA,50);
+  posicao=0;
+
+}
+
+else
+{
+ lcd.setCursor(1,0);
+  lcd.print("LED A OFF");
+analogWrite(pinLedA,0);
+  
+}
+  //botao 3
+   if (valorAnteriorLeitura==1023 &&
+valorLeitura>= valorBotao3*0.9 && valorLeitura<=valorBotao3 *1.1)
+{
+     analogWrite(pinLedA,0-1);
+     
+analogWrite(pinLedB,0-1);
+
+}
+//botao 4
+   if (valorAnteriorLeitura==1023 &&
+valorLeitura>= valorBotao4*0.9 && valorLeitura<=valorBotao4 *1.1)
+{
+ analogWrite(pinLedB,0+1 );
+     
+analogWrite(pinLedA,0+1);
+
+}
+  
+
+  
+
+ 
+
+}
