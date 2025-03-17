@@ -1,0 +1,180 @@
+Aula_17_03
+/*
+Autor: Caique
+Nome do programa: 5 botoes e dois leds
+Descricao: Acender 2 leds e aparecer no display
+Data: 17/03/2025
+*/
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,16,2);
+#define valorBotao1 0
+#define valorBotao2 145
+#define valorBotao3 329
+#define valorBotao4 505
+#define valorBotao5 741
+#define pinLedB 10
+#define pinLedA 9 
+#define pinAnalogico A0
+void setup()
+{
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print(">");
+  lcd.setCursor(1,0);
+  lcd.print("LED A OFF");
+  lcd.setCursor(1,1);
+  lcd.print("LED B OFF");
+  Serial.begin(9600);
+  pinMode(pinLedB, OUTPUT);
+    pinMode(pinLedA, OUTPUT);
+  
+  
+
+}
+void loop()
+{
+static bool posicao =0;
+static bool estadoLedA=0;
+static bool estadoLedB=0;
+int valorLeitura=analogRead(A0);
+static int valorAnteriorLeitura=1023;
+static byte intensidadeLedA=0;
+static byte intensidadeLedB=0;  
+static bool alteracao=0;
+   
+
+  //botao 1
+  if(valorLeitura==valorBotao1 && valorAnteriorLeitura ==1023 )
+  {
+ 	posicao=0;
+    alteracao=1;
+  }
+  //botao 2
+else if (valorLeitura>= valorBotao2*0.9 && valorLeitura<=valorBotao2 *1.1 && 
+         valorAnteriorLeitura==1023 )
+	{
+	posicao=1;
+  alteracao=1;
+	}
+    //botao 3
+   else if (valorLeitura>= valorBotao3*0.9 && valorLeitura<=valorBotao3 *1.1 
+            && valorAnteriorLeitura==1023 )
+	{
+     
+   if(!posicao && estadoLedA)
+    {
+     if(intensidadeLedA >0)
+      intensidadeLedA-=10;
+     if(intensidadeLedA==0)
+        estadoLedA=0;
+    }
+    else if(posicao==1 && estadoLedB)
+    {
+      if(intensidadeLedB >0)
+      intensidadeLedB-=10;
+      if(intensidadeLedB==0)
+        estadoLedB=0;
+    }
+     alteracao=1;
+	}
+  //botao 4
+  else if (valorLeitura>= valorBotao4*0.9 && valorLeitura<=valorBotao4 *1.1 && 
+         valorAnteriorLeitura==1023 )
+	{
+    
+    if(!posicao && estadoLedA)
+    {
+      if(intensidadeLedA <100)
+      intensidadeLedA+=10;
+    }
+    else if(posicao==1 && estadoLedB)
+    {
+      if(intensidadeLedB <100)
+      intensidadeLedB+=10;
+    }
+    alteracao=1;
+	}
+  //botao5
+  else if (valorLeitura>= valorBotao5*0.9 && valorLeitura<=valorBotao5 *1.1 && 
+         valorAnteriorLeitura==1023 )
+  {
+  if(posicao==0)
+  {
+    estadoLedA=!estadoLedA;
+    if(!estadoLedA && intensidadeLedA==0)
+      intensidadeLedA=10;
+  }
+    else
+  {
+     estadoLedB=!estadoLedB;
+       if(!estadoLedB && intensidadeLedB==0)
+      intensidadeLedB=10;
+  }
+   alteracao=1;
+    
+  }
+valorAnteriorLeitura=valorLeitura;
+
+//fim dos botoes
+
+
+ 
+if(alteracao)
+{
+  alteracao=0;
+
+
+//tratamento do display
+if(!posicao==0)
+{
+lcd.setCursor(0,0);
+lcd.print(" ");  
+lcd.setCursor(0,1);
+lcd.print(">");
+
+}
+else
+	{
+	lcd.setCursor(0,0);
+	lcd.print(">");
+	lcd.setCursor(0,1);
+	lcd.print(" ");
+
+	}
+
+   
+if(!estadoLedA)
+	{
+	lcd.setCursor(7,0);
+  	lcd.print("OFF ");
+	
+
+	}
+  else
+	{
+ 	lcd.setCursor(7,0);
+ 	lcd.print(intensidadeLedA);
+	lcd.print("  % ");
+	}
+
+if (!estadoLedB)
+	{
+  lcd.setCursor(7,1);
+  lcd.print("OFF ");
+	}
+
+else
+	{
+	 lcd.setCursor(7,1);
+ 	lcd.print(intensidadeLedB);
+	lcd.print("  % ");
+    }
+  //LEDS
+analogWrite(pinLedA,intensidadeLedA);
+analogWrite(pinLedB,intensidadeLedB);
+  
+} 
+  
+}
