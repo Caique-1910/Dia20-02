@@ -1,0 +1,80 @@
+Aula_For.Array_18_03
+/*
+Autor: Caique
+Nome do programa: Fibonacci, for,array
+Descricao: Fibonacci, for,array
+Data: 18/03/2025
+*/
+ int numA=1;
+ int numB=0;
+ int res=0;
+void setup()
+{
+  Serial.begin(9600);
+  for(int i=1;i<10; i++) 
+  {
+  	res=numA+numB;
+    Serial.println(res);
+  	numA=numB;
+  	numB=res;
+  	delay(1000);
+    
+  }
+}
+
+void loop()
+{
+ 
+  
+}
+
+/*
+Exercicio da sequencia fibonacci
+Do comeco da aula sem saber do for
+int numA=1;
+ int numB=0;
+ int res=0;
+void setup()
+{
+Serial.begin(9600);
+}
+void loop()
+{
+res=numA+numB;
+  Serial.println(res);
+  numA=numB;
+  numB=res;
+  delay(1000);
+
+
+if(res==28657)
+  {
+    numA=1;
+    numB=0;
+  }
+  }
+  */
+
+//CORRECAO
+/*
+void setup()
+{
+Serial.begin(9600);
+int a=0;
+int b=1;
+for(int i=0;i<10;i++)
+{
+Serial.print(a);
+int proximo = a+b;
+a=b;
+b=proximo;
+
+
+}
+
+
+}
+void loop()
+{
+}
+*/
