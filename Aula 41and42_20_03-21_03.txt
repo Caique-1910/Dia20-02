@@ -85,46 +85,47 @@ void loop()
   
   EXERCICIO 4
   
-  int pinLeds[3]{2,3,4};
-
-void setup()
+ void setup()
+ {
+ while(true)
+ {
+  int pinLeds[3]{4,3,2};
+  bool statusBotao;
+  int pinBotao=8;
+  int contador=0;
+  pinMode(pinBotao,INPUT)
+  statusBotao=digitalRead(pinBotao);
+  Serial.println(statusBotao);
+  if(statusBotao==1)
+  {
+  digitalWrite(pinLeds[0],LOW);
+    digitalWrite(pinLeds[1],LOW);
+      digitalWrite(pinLeds[2],LOW);
+      delay(500);
+      for (contador;contador<3;contador++)
 {
-    
-	Serial.begin(9600);
-    pinMode(10,INPUT_PULLUP);
-  	int leituraBot=digitalRead(10);
- 	for( int i=0;i<3;i++)
-  	{
-    	pinLeds[i];
-  		pinMode(pinLeds[i],OUTPUT);
-
-  	}
-   
-  }
-void loop()
+pinMode(pinLeds[contador],OUTPUT);
+digitalWrite(pinLeds[contador],HIGH);
+delay(1000);
+statusBotao=digitalRead(pinBotao);
+if(statusBotao==0)contador=5;
+}
+if(statusBotao)
 {
-  	int leituraBot=digitalRead(10);
-   	Serial.println(leituraBot);
-  
-     	for( int i=0;i<3;i++)
-    {
-  if(leituraBot==0)
-      {
-      
-      digitalWrite(pinLeds[i],HIGH);
-       delay(1000);
-        digitalWrite(pinLeds[i],LOW);
-       delay(1000);
-        
-      }
-      
-          if(leituraBot==1)
-      {
-      
-      digitalWrite(pinLeds[i],LOW);
-       
-    }
-        }
+contador=0;
+for(contador;contador<3;contador++)
+{
+digitalWrite(pinLeds[contador],LOW);
+delay(1000);
+statusBotao=digitalRead(pinBotao);
+if(statusBotao==0) contador=5;
 }
 
-*/
+}
+}
+}
+}
+
+void loop()
+{
+}
