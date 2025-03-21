@@ -1,0 +1,130 @@
+Aula 41and42_20_03-21_03
+/*
+ Autor: Caique
+ Nome do programa: Fibonacci, for,array,while
+ Descricao: Fibonacci, for,
+ Data: 20/03/2025-21/03/2025
+ */
+/*
+EXERCICIO 1
+int numeros[11]{0,1,2,3,4,5,6,7,8,9,10};
+int multiplicador=5;
+int resultado=0;
+void setup()
+{
+  
+  
+  
+  Serial.begin(9600);
+  for(int i=0;i<11;i++)
+  {
+    numeros[i];
+    resultado=numeros[i]*multiplicador;
+    Serial.println(resultado);
+    
+  }
+
+  
+  
+}
+void loop()
+{
+} 
+  EXERCICIO 2
+  int numero[5]{2,3,5,7,11};
+int numeroAval=4;
+
+void setup()
+{
+  Serial.begin(9600);
+  for(int i =0;i<=5;)
+  {
+    numero[i];
+    if (numero[i]==numeroAval)Serial.println("Numero encontrado");
+    else Serial.println("Numero nao encontrado");
+    
+  }
+} 
+void loop()
+{
+ 
+    
+  
+  
+}
+  
+  EXERCICIO 3
+  int pinLeds[3]{2,3,4};
+
+
+void setup()
+{
+  for( int i=0;i<3;i++)
+  {
+    pinLeds[i];
+  	pinMode(pinLeds[i],OUTPUT);
+    delay(3000);
+    digitalWrite(pinLeds[i],HIGH);
+    
+  }
+  delay(3000);
+  digitalWrite(2,LOW);
+  delay(3000);
+  digitalWrite(3,LOW);
+  delay(3000);
+  digitalWrite(4,LOW);
+} 
+void loop()
+{
+ 
+    
+  
+  
+}
+
+  
+  EXERCICIO 4
+  
+  int pinLeds[3]{2,3,4};
+
+void setup()
+{
+    
+	Serial.begin(9600);
+    pinMode(10,INPUT_PULLUP);
+  	int leituraBot=digitalRead(10);
+ 	for( int i=0;i<3;i++)
+  	{
+    	pinLeds[i];
+  		pinMode(pinLeds[i],OUTPUT);
+
+  	}
+   
+  }
+void loop()
+{
+  	int leituraBot=digitalRead(10);
+   	Serial.println(leituraBot);
+  
+     	for( int i=0;i<3;i++)
+    {
+  if(leituraBot==0)
+      {
+      
+      digitalWrite(pinLeds[i],HIGH);
+       delay(1000);
+        digitalWrite(pinLeds[i],LOW);
+       delay(1000);
+        
+      }
+      
+          if(leituraBot==1)
+      {
+      
+      digitalWrite(pinLeds[i],LOW);
+       
+    }
+        }
+}
+
+*/
