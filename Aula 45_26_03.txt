@@ -1,0 +1,55 @@
+Aula 45_26_03
+#include <Arduino.h>
+
+#define pinLed 18
+#define pinbutton 21
+
+void setup() {
+  pinMode(pinLed, OUTPUT);
+  pinMode(pinbutton, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop() 
+{
+ 
+bool estadoBotao=digitalRead(pinbutton);
+static bool estadoAnterior=1;
+static bool acao=1;
+
+static unsigned long tempoAnteriorDebounce=0;
+unsigned long tempoAtual=millis();
+const unsigned long tempoDebounce=50;
+
+static int contagem=0;
+//! INICIA O TRATAMENTO DO RUIDO BOTAO
+//*Marca uma mudanca de estado acontece
+if(estadoBotao!=estadoAnterior)
+{
+tempoAnteriorDebounce=tempoAtual;
+}
+//* Verifica se a mudanca de estado esta estavel a bastante tempo
+if((tempoAtual-tempoAnteriorDebounce)>tempoDebounce)
+{
+ if(estadoBotao != acao)//* Houve uma alteracao proposital do estado do botao
+{
+  acao=estadoBotao;
+if(!estadoBotao)//botao pressionado
+{
+ contagem++;
+ Serial.println(contagem);
+ digitalWrite(pinLed,HIGH);//Nao e obrigatorio
+}
+else //o botao foi solto
+{
+ digitalWrite(pinLed,LOW);
+ //Nao e obrigatorio
+}
+}
+}
+estadoAnterior=estadoBotao;
+//! FINAL DO TRATAMENTO DO BOTAO
+
+
+}
+
