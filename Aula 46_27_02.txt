@@ -1,0 +1,48 @@
+Aula 46_27_02
+
+#include <Arduino.h>
+#define pinLed 18
+
+//*PROTOTIPO DA FUNCAO
+
+void ligaLed(uint8_t);
+void desligaLed(uint8_t);
+int calcula(int a, int b, int c);
+
+
+void setup() 
+{
+  Serial.begin(9600);
+  pinMode(pinLed,OUTPUT);
+  int raizFuncao=calcula(1, -3, -10);
+Serial.println(raizFuncao);
+}
+
+void loop()
+  {
+  ligaLed(pinLed);
+  delay(1000);
+  desligaLed(pinLed);
+  delay(1000);
+  }
+
+void ligaLed(uint8_t pin)
+{
+ digitalWrite(pin,HIGH);
+}
+
+void desligaLed(uint8_t pin)
+{
+ digitalWrite(pin,LOW);
+}
+
+int calcula(int a, int b, int c )
+{
+int resultado;
+
+resultado = (-(b) + sqrt(b*b-(4*a*c)))/(2*a);
+
+
+return resultado;
+}
+
