@@ -1,0 +1,25 @@
+Aula 44_25_03
+#include <Arduino.h>
+#include <LiquidCrystal_I2C.h>
+/*
+Autor:Caique Lima Alves
+nome:primeiro projeto
+descricao:monitor(Aula 44 )
+data:25/03/25 
+*/
+LiquidCrystal_I2C lcd( 0x27, 20, 4);
+
+void setup() 
+{
+   Serial.begin(115200);
+   lcd.init();
+   lcd.backlight();
+   lcd.print("Cr7 > Messi");
+}
+
+void loop()
+{
+  static int contagem=0;
+  Serial.println(contagem++);
+  delay(300);
+}
