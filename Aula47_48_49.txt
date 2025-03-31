@@ -1,0 +1,105 @@
+Aula47_48_49
+/*
+Autor:Caique
+nome:Aula 47,48 e 49
+descricao:Aula livre e apresentacao
+data:28/03,31/03 e 01/04
+*/
+#include <Arduino.h>
+#include <LiquidCrystal_I2C.h>
+#define pinLed 4
+#define button 18
+LiquidCrystal_I2C lcd(0x27,20,4); 
+
+byte escudo[] = {
+  B00100,
+  B10101,
+  B01110,
+  B01110,
+  B01110,
+  B10101,
+  B01110,
+  B00100
+};
+
+void setup() 
+{
+  
+  Serial.begin(9600);
+  lcd.init();
+  lcd.backlight();
+  pinMode(pinLed,OUTPUT);
+  pinMode(button,INPUT_PULLUP);
+  lcd.setCursor(0,2);
+  lcd.print("CHORO NA BARRA FUNDA");
+  
+  lcd.createChar(4,escudo);
+  lcd.home();
+  lcd.setCursor(4,7);
+  lcd.write(4);
+  
+}
+
+void loop() 
+{
+  
+  bool estadoBotao=digitalRead(button);
+  static bool estadoAnterior=1;
+  static bool acao=1;
+
+  static unsigned long tempoAnteriorDebounce=0;
+  unsigned long tempoAtual=millis();
+  const unsigned long tempoDebounce=50;
+
+  static int contagem=0;
+
+  if(estadoBotao!=estadoAnterior)
+{
+  tempoAnteriorDebounce=tempoAtual;
+}
+
+  if((tempoAtual-tempoAnteriorDebounce)>tempoDebounce)
+{
+  if(estadoBotao != acao)
+{
+  acao=estadoBotao;
+  if(!estadoBotao)
+
+  {
+  contagem++;
+  Serial.println(contagem);
+   }
+  if(contagem %3 ==0)
+  {
+  lcd.setCursor(0,0);
+  lcd.print("                           ");
+  lcd.setCursor(0,0);
+  lcd.print("O CORINTHIANS FOI   CAMPEAO!!!!!!  ");
+  digitalWrite(pinLed,HIGH);
+  }
+else 
+{
+
+  lcd.setCursor(0,0);
+  lcd.print("                           ");
+  lcd.setCursor(0,0);
+  lcd.print("O VARMEIRAS NAO TEM MUNDIAL             ");
+  digitalWrite(pinLed,LOW);
+}
+}
+}
+  estadoAnterior=estadoBotao;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
