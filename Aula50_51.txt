@@ -31,6 +31,7 @@ void loop()
   static long contador=0;
   static bool posicaoA_=0;
   static bool posicaoB_=0;
+  static long contagem=0;
   bool posicaoA=digitalRead(canalA);
   bool posicaoB=digitalRead(canalB);
   int resultado=0;
@@ -72,13 +73,18 @@ Serial.println(marcador4);
  }
  if(resultado==4)
  {
+  
+ contagem--; 
+ Serial.println(contagem);
  lcd.setCursor(0,0);
- lcd.print("HORARIO      ");
+ lcd.print(contagem);
  }
  else if(resultado==5)
  {
+ contagem++; 
+ Serial.print(contagem); 
  lcd.setCursor(0,0);
- lcd.print("ANTI HORARIO");
+ lcd.print(contagem);
  }
 }
 
