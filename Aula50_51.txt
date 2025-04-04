@@ -2,7 +2,7 @@ Aula50_51
 
 /*
 Autor:Caique
-nome:Aula 50 e 51
+nome:Aula 50,51 e 52
 descricao:encoder rotative(com ruido)
 data:02/04, 03/04
 */
