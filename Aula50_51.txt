@@ -1,4 +1,4 @@
-Aula50_51
+Aula50_51_52
 
 /*
 Autor:Caique
@@ -8,7 +8,7 @@ data:02/04, 03/04
 */
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
-//AULA 50 e 51
+
 LiquidCrystal_I2C lcd(0x27,20,4);
 #define canalA 18
 #define canalB 5
