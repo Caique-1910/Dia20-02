@@ -1,0 +1,95 @@
+Aula51_52_53
+
+/*
+Autor:Caique
+nome:Aula 51,52 e 53
+descricao:encoder rotative(com ruido)
+data:02/04, 03/04
+*/
+#include <Arduino.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,20,4);
+#define canalA 18
+#define canalB 5
+void setup() 
+{
+  pinMode(canalA,INPUT);
+  pinMode(canalB,INPUT);
+  Serial.begin(1500000);
+  lcd.init();
+  lcd.backlight();
+
+}
+
+void loop() 
+{
+  static byte marcador1=0;
+  static byte marcador2=0;
+  static byte marcador3=0;
+  static byte marcador4=0;
+  static long contador=0;
+  static bool posicaoA_=0;
+  static bool posicaoB_=0;
+  static long contagem=0;
+  bool posicaoA=digitalRead(canalA);
+  bool posicaoB=digitalRead(canalB);
+  int resultado=0;
+  
+if(posicaoA != posicaoA_ || posicaoB != posicaoB_)
+{ 
+if(contador==1){
+if(posicaoA==0 && posicaoB==1)
+marcador1 =1;
+Serial.println(marcador1);
+if(posicaoA==1 && posicaoB==0)
+ marcador1 =2;
+ Serial.println(marcador1);
+
+}
+if(contador==3){
+if(posicaoA==0 && posicaoB==1)
+marcador2=1;
+Serial.println(marcador2);
+
+if(posicaoA==1 && posicaoB==0)
+ marcador2=2;
+ Serial.println(marcador2);
+
+}
+if(contador==2)
+marcador3=0;
+Serial.println(marcador3);
+
+if(posicaoA==1 && posicaoB==1)
+marcador4=3;
+Serial.println(marcador4);
+
+ if(contador>4)
+ {
+ contador=0;
+ resultado=marcador1+marcador2-marcador3+marcador4;
+ Serial.println(resultado);
+ }
+ if(resultado==4)
+ {
+  
+ contagem--; 
+ Serial.println(contagem);
+ lcd.setCursor(0,0);
+ lcd.print(contagem);
+ }
+ else if(resultado==5)
+ {
+ contagem++; 
+ Serial.print(contagem); 
+ lcd.setCursor(0,0);
+ lcd.print(contagem);
+ }
+}
+
+contador++;
+posicaoA_=posicaoA;
+posicaoB_=posicaoB;
+
+} 
