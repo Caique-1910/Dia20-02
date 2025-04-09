@@ -1,0 +1,110 @@
+Aula 54
+Part 1
+#include <Arduino.h>
+//Estruturas
+struct Pessoa
+{
+  char nome[20];
+  int idade;
+  float altura;
+  bool calvice;
+};
+
+Pessoa aluno;
+Pessoa professor;
+struct coresRGB
+{
+ int r=0;
+ int g=0;
+ int b=0;
+
+};
+coresRGB azul;
+coresRGB amarelo;
+coresRGB vermelho;
+coresRGB azulEscuro;
+void setup() 
+{
+ Serial.begin(9600);
+
+ strcpy(aluno.nome,"Caique");
+ aluno.idade=16;
+ aluno.altura=1.75;
+ aluno.calvice=false;
+
+ strcpy(professor.nome,"Cleber");
+ professor.idade=45;
+ professor.altura=1.85;
+ professor.calvice=true;
+
+ azul.r=68;
+ azul.g=64;
+ azul.b=218;
+
+ amarelo.r=244;
+ amarelo.g=222;
+ amarelo.b=41;
+
+ vermelho.r=250;
+ vermelho.g=13;
+ vermelho.b=13;
+
+ azulEscuro.r=4;
+ azulEscuro.g=33;
+ azulEscuro.b=97;
+ 
+ 
+ Serial.printf("meu nome e: %s \n\r", aluno.nome);
+ Serial.printf("E tenho %d anos \n\r",aluno.idade);
+ Serial.printf("tenho %.2f metros de altura \n\r" , aluno.altura);
+ Serial.printf("E %s calvo \n\r",aluno.calvice ? "sou" : "nao sou");
+
+ Serial.printf("meu nome e: %s \n\r", professor.nome);
+ Serial.printf("E tenho %d anos \n\r",professor.idade);
+ Serial.printf("tenho %.2f metros de altura \n\r" ,professor.altura);
+ Serial.printf("E %s calvo",professor.calvice ? "sou" : "nao sou");
+
+ 
+
+}
+
+void loop()
+{
+
+}
+
+Part 2
+#include <Arduino.h>
+
+char nome[20];
+char nome2[20];
+void setup() {
+ Serial.begin(9600);
+ strcpy(nome,"Caique");
+ strcpy(nome2,"Caique L.A");
+ Serial.println(nome);
+ strcat(nome," Lima");
+ Serial.println(nome);
+ int tamanho=strlen(nome);
+ Serial.println(tamanho);
+
+if(strcmp(nome2,nome)==0) Serial.println("Sao iguais");
+else  Serial.println("Sao diferentes");
+
+if(strcmp("Caique Lima",nome)==0) Serial.println("Sao iguais");
+else  Serial.println("Sao diferentes");
+
+if(strncmp(nome2,nome,10)==0) Serial.println("Os 6 primeiros sao iguais");
+else Serial.println("O comeco nao e igual");
+
+char buffer[50];
+int temperatura=25;
+sprintf(buffer,"Temperatura: %d°C", temperatura);
+Serial.println(buffer);
+}
+
+
+void loop() {
+  
+}
+
