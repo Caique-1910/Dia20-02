@@ -1,0 +1,74 @@
+Aula 55
+// Leitura da Serial
+#include <Arduino.h>
+#include "BluetoothSerial.h"
+#define pinLed 2
+
+BluetoothSerial BT;
+String palavra = "";
+
+void setup()
+{
+  BT.begin("ESPCaique");
+  BT.println("Digite algo no monitor Serial:");
+  pinMode(pinLed, OUTPUT);
+}
+
+void loop()
+{
+  while (BT.available())
+  {
+    char caractere = BT.read();
+    int numero = 10;
+    if (caractere == '\n')
+    {
+      BT.println(palavra);
+      if (palavra.equalsIgnoreCase("led1"))
+      {
+        BT.println("Qual intesidade?");
+        if (palavra.equalsIgnoreCase("liga"))
+        {
+          BT.println(numero);
+          digitalWrite(pinLed, HIGH);
+          if (palavra.equalsIgnoreCase("aumenta"))
+          {
+            numero += 10;
+            BT.println(numero);
+          }
+          else if (palavra.equalsIgnoreCase("diminui"))
+          {
+            numero -= 10;
+            BT.println(numero);
+          }
+        }
+      }
+      else if (palavra.equalsIgnoreCase("desliga"))
+      {
+        digitalWrite(pinLed, LOW);
+      }
+      palavra = "";
+    }
+    else if (caractere != '\r')
+    {
+      palavra += caractere;
+    }
+  }
+}
+
+/*
+  if(caractere == 'L')
+  {
+   digitalWrite(pinLed,HIGH);
+   Serial.println("LED LIGADO");
+  }
+  else if(caractere == 'D')
+  {
+   digitalWrite(pinLed,LOW);
+   Serial.println("LED DESLIGADO");
+  }
+  else
+  {
+    Serial.println("Digite apenas L ou D");
+    Serial.printf("Voce digitou %c \n\r", caractere);
+  }
+ }*/
