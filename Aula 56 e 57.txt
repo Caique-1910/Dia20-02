@@ -1,0 +1,76 @@
+Aula 56 e 57
+// Aula 56 e 57
+// Comunicacao BT
+#include <Arduino.h>
+#include "BluetoothSerial.h"
+#define led 2
+
+BluetoothSerial BT;
+//! ESP SLAVE
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(led, OUTPUT);
+  BT.begin("ESPCleber", false);
+  Serial.println("Esperando uma conexao Bluetooth");
+}
+
+void loop()
+{
+  if (BT.hasClient())
+  {
+    if (BT.available())
+    {
+      String mensagem = BT.readStringUntil('\r');
+      Serial.printf("Comando recebido:%s\n\r", mensagem);
+      if (mensagem.equalsIgnoreCase("liga")==1)
+      {
+        digitalWrite(led, HIGH);
+        BT.print("Led ligado \n\r");
+      }
+      else if (mensagem.equalsIgnoreCase("desliga")==1)
+      {
+        digitalWrite(led, LOW);
+        BT.print("Led desligado \n\r");
+      }
+    }
+  }
+}
+/*
+#include <Arduino.h>
+#include "BluetoothSerial.h"
+BluetoothSerial BT;
+//!MASTER
+void setup()
+{
+Serial.begin(9600);
+BT.begin("EspMaster",true);
+
+if(BT.connect(""))
+{
+Serial.println("Conectado ao dispositivo";)
+}
+else
+{
+Serial.println("Deu ruim");
+while(true); //!TRAVA O ESP
+{
+
+}
+void loop()
+{
+BT.print("ping");
+Serial.println("Enviado a mensagem");
+
+unsigned long timeout=millis()+1000;
+while(millis()<timeout)
+{
+String resposta=BT.readStringUntil('r');
+Serial.printf("Resposta: %s", respota);
+break;
+}
+}
+
+}
+*/
+
