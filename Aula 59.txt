@@ -1,0 +1,119 @@
+Aula 59
+#include <Arduino.h>
+#include <BluetoothSerial.h>
+#define led 2
+BluetoothSerial SerialBT;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(led, OUTPUT);
+  if (!SerialBT.begin("MasterCaique", true))
+  {
+    Serial.println("Erro ao iniciar o Bluetooth no modo master");
+  }
+
+  if (SerialBT.connect("SlaveGuinas"))
+  {
+    Serial.println("Conectado com sucesso");
+  }
+  else
+  {
+    Serial.println("Falha ao conectar");
+  }
+}
+void loop()
+{
+  static bool piscaLed = false;
+  static bool estadoLed = false;
+  unsigned long tempoAtual = millis();
+  static unsigned long tempoInicial;
+
+  if (Serial.available())
+  {
+    String comandoEnviar = Serial.readStringUntil('\n');
+    comandoEnviar.trim();
+    SerialBT.println(comandoEnviar);
+  }
+
+  if (SerialBT.available())
+  {
+    String comandoReceber = SerialBT.readStringUntil('\n');
+    comandoReceber.trim();
+    Serial.printf("Comando recebido: %s \n\r", comandoReceber);
+    if (comandoReceber.equals("liga"))
+    {
+      digitalWrite(led, HIGH);
+      piscaLed = false;
+    }
+    else if (comandoReceber.equals("desliga"))
+    {
+      digitalWrite(led, LOW);
+      piscaLed = false;
+    }
+    else if (comandoReceber.equals("pisca"))
+    {
+      piscaLed = true;
+    }
+    else
+    {
+      Serial.println("Comando nao reconhecido");
+    }
+  }
+
+  if (piscaLed)
+  {
+    if (tempoAtual - tempoInicial > 300)
+    {
+      estadoLed = !estadoLed;
+      tempoInicial = tempoAtual;
+    }
+    digitalWrite(led, estadoLed);
+  }
+}
+
+Slave
+O slave esta com Guilherme Ribeiro
+#include <Arduino.h>
+#include <BluetoothSerial.h>
+
+BluetoothSerial SerialBT;
+
+void setup()
+{
+  Serial.begin(9600);
+  if (!SerialBT.begin("SlaveCaique", false))
+  {
+    Serial.println("Erro ao conectar Bluetooth");
+  }
+}
+
+void loop()
+{
+  if (Serial.available())
+  {
+    String comandoEnviar = Serial.readStringUntil('\n');
+    comandoEnviar.trim();
+    SerialBT.print(comandoEnviar);
+  }
+
+  if (SerialBT.available())
+  {
+    String comandoReceber = SerialBT.readStringUntil('\n');
+    comandoReceber.trim();
+    Serial.printf("Comando Recebido: %s \n\r", comandoReceber);
+    if (comandoReceber.equals("liga"))
+    {
+    }
+    else if (comandoReceber.equals("desliga"))
+    {
+    }
+    else if (comandoReceber.equals("pisca"))
+    {
+    }
+    else
+    {
+      Serial.println("Comando nao reconhecido");
+    }
+  }
+}
