@@ -1,0 +1,66 @@
+Projeto dsensores
+#include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_BMP280.h>
+
+#define SDA_PIN 18
+#define SCL_PIN 19
+#define KY 15 // pino analógico
+
+Adafruit_BMP280 bmp; // Sensor BMP280 via I2C
+
+void setup()
+{
+  Serial.begin(9600);
+  Wire.begin(SDA_PIN, SCL_PIN);
+  Serial.println("Bata uma palma para ativar o sensor");
+
+  pinMode(KY, INPUT);
+
+  if (!bmp.begin(0x76))
+  {
+    Serial.println(F("BMP280 nao encontrado!"));
+    while (1)
+      delay(10);
+  }
+
+  bmp.setSampling(Adafruit_BMP280::MODE_FORCED,
+                  Adafruit_BMP280::SAMPLING_X2,
+                  Adafruit_BMP280::SAMPLING_X16,
+                  Adafruit_BMP280::FILTER_X16,
+                  Adafruit_BMP280::STANDBY_MS_500);
+
+  delay(1000);
+}
+
+void loop()
+{
+  int leitorKy = analogRead(KY);
+  bool atualizacao = 0;
+
+  // Leitura do sensor KY
+  if (leitorKy > 900 && leitorKy < 4500)
+  {
+    Serial.println("Sensor ativado");
+    if (bmp.takeForcedMeasurement())
+    {
+      float temp = bmp.readTemperature();
+      float press = bmp.readPressure() / 100.0; // hPa
+      float alt = bmp.readAltitude(1013.25);
+
+      Serial.print("Temperatura: ");
+      Serial.print(temp);
+      Serial.println(" *C");
+
+      Serial.print("Pressao: ");
+      Serial.print(press);
+      Serial.println(" hPa");
+
+      Serial.print("Altitude: ");
+      Serial.print(alt);
+      Serial.println(" m");
+
+
+    }
+  }
+}
