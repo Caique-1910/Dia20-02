@@ -1,0 +1,38 @@
+Internet
+#include <Arduino.h>
+#include  <ezTime.h>
+#include "internet.h"
+
+Timezone tempo;
+void setup()
+{
+  Serial.begin(9600);
+  conectaWiFi();
+
+  waitForSync();
+  tempo.setLocation("America/Sao Paulo");
+}
+void loop()
+{
+  checkWiFi();
+  Serial.println(tempo.dateTime()); //Da o dia, mes, ano e horario exato
+  Serial.println(tempo.day());//Da o dia exato
+  Serial.println(tempo.month());//Da o mes exato
+  Serial.println(tempo.year());//Da o ano exato
+  Serial.println(tempo.yearISO());//Da o ano exato tbn
+  Serial.println(tempo.dayOfYear());//Da o dia ano que estamos
+  Serial.println(tempo.hour());//Da a hora exata de hoje
+  Serial.println(tempo.hourFormat12());//Da hora exata de hoje
+  Serial.println(tempo.minute());//Da o minuto exato de agora
+  Serial.println(tempo.second());//Da o segundo exato de agora
+  Serial.println(tempo.getPosix());//Numero de segundos desde de 1 de janeiro de 1970
+  Serial.println(tempo.isAM());//Fala se esta de dia
+  Serial.println(tempo.isPM());//Fala se esta de tarde ou noite
+  Serial.println(tempo.now());//A hora atual em segundos
+  Serial.println(tempo.ms());//Da o milisegundo exato de agora
+  Serial.println(tempo.weekday());//Da o dia da semana de hoje
+  Serial.println("_____________________");
+  delay(2000);
+
+}
+

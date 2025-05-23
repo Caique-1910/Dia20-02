@@ -1,0 +1,188 @@
+IOT e JSON
+#include <Arduino.h>
+#include <PubSubClient.h>
+#include <WiFi.h>
+#include <ArduinoJson.h>
+#include <Bounce2.h>
+#include <DHT.h>
+#include "internet.h"
+#define pinLed 2
+#define pinButton 0
+#define DHTPIN 15
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+const char *mqtt_server = "broker.hivemq.com";
+const int mqtt_port = 1883;
+const char *mqtt_id = "esp32Caique";
+const char *mqtt_topic_sub = "senai134/mesa06/esp_inscrito";
+const char *mqtt_topic_pub = "senai134/mesa06/esp_publicando";
+
+void callback(char *, byte *, unsigned int);
+void mqttConnect(void);
+void controleLed(void);
+
+Bounce button;
+
+unsigned long intervalo = 100;
+unsigned long intervaloDht = 5000;
+bool estadoLed = false;
+bool modoPisca = false;
+
+void setup()
+{
+  Serial.begin(9600);
+  dht.begin();
+  pinMode(pinLed, OUTPUT);
+  button.attach(pinButton, INPUT_PULLUP);
+  button.interval(5);
+  conectaWiFi();
+
+  client.setServer(mqtt_server, mqtt_port);
+  client.setCallback(callback);
+}
+
+void loop()
+{
+  checkWiFi();
+  button.update();
+  if (!client.connected())
+    mqttConnect();
+
+  client.loop();
+
+  static unsigned long tempoAnterior = 0;
+  unsigned long tempoAtual = millis();
+  static unsigned long ultimaLeituraDHT = 0;
+
+  if (tempoAtual - tempoAnterior)
+  {
+    client.publish(mqtt_topic_pub, "Faz o l");
+    tempoAnterior = tempoAtual;
+  }
+
+  if (button.changed())
+  {
+    int deboced = button.read();
+    if (deboced == 1)
+    {
+      JsonDocument doc;
+      String mensagem;
+      doc["botao"] = deboced;
+      doc["msg"] = "Ligado";
+      serializeJson(doc, mensagem);
+      unsigned long agoraDht = millis();
+
+      if (agoraDht - ultimaLeituraDHT >= intervaloDht)
+      {
+        ultimaLeituraDHT = agoraDht;
+        float temperatura = dht.readTemperature();
+        float umidade = dht.readHumidity();
+        if (isnan(temperatura) || isnan(umidade)) //! Verifica se nao leu
+        {
+          Serial.println("Falha ao ler DHT");
+        }
+        else
+        {
+          JsonDocument docDHT;
+          String mensagemDHT;
+          docDHT["temperatura"] = temperatura;
+          docDHT["umidade"] = umidade;
+          serializeJson(docDHT, mensagemDHT);
+          client.publish(mqtt_topic_sub, mensagemDHT.c_str());
+        }
+      }
+    }
+    else if (deboced == 0)
+    {
+      JsonDocument doc;
+      String mensagem;
+      doc["botao"] = deboced;
+      doc["msg"] = "Desligado";
+      serializeJson(doc, mensagem);
+      client.publish(mqtt_topic_sub, mensagem.c_str());
+    }
+  }
+  controleLed();
+}
+
+void callback(char *topic, byte *payload, unsigned int lenght)
+{
+
+  Serial.printf("mensagem recebida em %s: ", topic);
+
+  String mensagem = "";
+  for (unsigned int i = 0; i < lenght; i++)
+  {
+    char c = (char)payload[i];
+    mensagem += c;
+  }
+  Serial.println(mensagem);
+
+  JsonDocument doc;
+  deserializeJson(doc, mensagem);
+
+  if (!doc["estadoLed"].isNull())
+  {
+    estadoLed = doc["estadoLed"];
+    modoPisca = 0;
+  }
+  if (!doc["modoPisca"].isNull())
+  {
+    modoPisca = doc["modoPisca"];
+  }
+  if (!doc["velocidade"].isNull())
+  {
+    intervalo = doc["velocidade"];
+  }
+  if(!doc["VelDHT"].isNull())
+  {
+    intervaloDht += 1000;
+  }
+}
+
+void mqttConnect()
+{
+  while (!client.connected())
+  {
+    Serial.println("Conectando ao Mqtt...");
+
+    if (client.connect(mqtt_id))
+    {
+      Serial.println("Conectado com sucesso");
+      client.subscribe(mqtt_topic_sub);
+    }
+
+    else
+    {
+      Serial.print("falha, rc");
+      Serial.println(client.state());
+      Serial.println("Tentando novamente em 5 segundos");
+      delay(5000);
+    }
+  }
+}
+
+void controleLed()
+{
+  static unsigned long antes = 0;
+  unsigned long agora = millis();
+
+  if (modoPisca)
+  {
+    if (agora - antes > intervalo)
+    {
+      estadoLed = !estadoLed;
+      antes = agora;
+    }
+  }
+
+  if (intervalo <= 0 || intervalo < 100)
+    intervalo = 100;
+  if (intervalo >= 2000)
+    intervalo = 2000;
+
+  digitalWrite(pinLed, estadoLed);
+}
